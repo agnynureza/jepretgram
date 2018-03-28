@@ -15,6 +15,7 @@ mongoose.connect('mongodb://agnynureza:12345@ds227199.mlab.com:27199/livecodepha
 
 var index = require('./routes/index');
 const users = require('./routes/users');
+const posts = require('./routes/posts')
 
 
 
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/post',posts)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

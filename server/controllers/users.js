@@ -1,4 +1,4 @@
-const User      = require('../model/users')
+const User      = require('../models/users')
 const bcrypt    = require('bcrypt')
 const jwt       = require('jsonwebtoken')
 const saltRound = 10
@@ -10,7 +10,8 @@ module.exports = {
         User.create({
             username : req.body.username,
             email    : req.body.email,
-            password : userPassword
+            password : userPassword,
+            role     : 'user' 
         },(err,user) => {
             if (err) {
                 res.status(500).json({
