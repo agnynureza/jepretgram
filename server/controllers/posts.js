@@ -24,10 +24,11 @@ module.exports = {
     })
   },
   readFile: (req, res) => {
+    console.log('massukkkk')
     Post
     .find()
     .populate('user_id')
-    .populate('upvote')
+    .populate('like')
     .exec()
     .then(allpost => {
         returnData = []
@@ -37,10 +38,8 @@ module.exports = {
             user_id: allpost[i].user_id,
             image: allpost[i].image,
             title: allpost[i].title,
-            totalUpvote: allpost[i].upvote.length,
-            totalDownvote: allpost[i].downvote.length,
-            upvote: allpost[i].upvote,
-            downvote: allpost[i].downvote
+            totalLike: allpost[i].like.length,
+            like: allpost[i].like,
           })
         }
         res.status(200).json({
@@ -97,9 +96,6 @@ module.exports = {
       } else {
         post.like.forEach((postLike, index) => {
           if (postLike == userId) {
-            console.log(`Samaa ! di index ${index}, ${userId} , ${postLike}`)
-            var indexId = index
-            post.like.splice(indexId, 1)
             post.save(function (err) {
               if (err) {
                 res.status(400).json({
@@ -107,27 +103,30 @@ module.exports = {
                 });
               } else {
                 res.status(200).json({
-                  message: 'You cancel Like this post !',
+                  message: 'You already like this post !',
                   status: 0
                 });
               }
             })
+          }else{
+            post.like.push(userId)
+            post.save(function (err) {
+            if (err) {
+              res.status(400).json({
+              status: 'failed'
+              });
+            } else {
+              res.status(200).json({
+                message: 'You Upvote this post !',
+                status: 1
+              });
+            }
+          });
           }
         })
       }
-      post.like.push(userId)
-      post.save(function (err) {
-        if (err) {
-          res.status(400).json({
-          status: 'failed'
-          });
-        } else {
-          res.status(200).json({
-            message: 'You Upvote this post !',
-            status: 1
-          });
-        }
-      });
+
+      
     })
   }
 }
