@@ -10,7 +10,7 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 
 mongoose.connect('mongodb://agnynureza:12345@ds227199.mlab.com:27199/livecodephase2db')
-
+app.use(cors())
 
 
 var index = require('./routes/index');

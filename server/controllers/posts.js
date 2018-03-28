@@ -3,6 +3,7 @@ const Post = require('../models/posts');
 
 module.exports = {
   uploadFile: (req, res) => {
+    console.log('masukk ke sini')
   Post
   .create({
     title: req.body.title,
@@ -96,37 +97,27 @@ module.exports = {
       } else {
         post.like.forEach((postLike, index) => {
           if (postLike == userId) {
-            post.save(function (err) {
-              if (err) {
-                res.status(400).json({
-                    status: 'failed'
+              res.status(200).json({
+                message: 'You already Like this post !',
+                status: 0
                 });
-              } else {
-                res.status(200).json({
-                  message: 'You already like this post !',
-                  status: 0
-                });
-              }
-            })
           }else{
             post.like.push(userId)
             post.save(function (err) {
-            if (err) {
-              res.status(400).json({
-              status: 'failed'
-              });
-            } else {
-              res.status(200).json({
-                message: 'You Upvote this post !',
-                status: 1
-              });
-            }
-          });
+              if (err) {
+                res.status(400).json({
+                status: 'failed'
+                });
+              } else {
+                res.status(200).json({
+                  message: 'You Upvote this post !',
+                  status: 1
+                });
+              }
+            });
           }
         })
       }
-
-      
     })
   }
 }

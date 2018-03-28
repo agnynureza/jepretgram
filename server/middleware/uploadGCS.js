@@ -13,6 +13,7 @@ const storage = Storage({
 // set which bucket
 const bucket = storage.bucket(config.CLOUD_BUCKET);
 
+
 // just a helper to create absolute path to GCS
 function getPublicUrl (filename) {
   return `https://storage.googleapis.com/${config.CLOUD_BUCKET}/${filename}`;
@@ -23,7 +24,6 @@ function sendUploadToGCS (req, res, next) {
   if (!req.file) {
     return next('upload mungkin gagal');
   }
-
   const gcsname = Date.now() + '.' + req.file.originalname.split('.').pop();
   const file = bucket.file(gcsname);
 
