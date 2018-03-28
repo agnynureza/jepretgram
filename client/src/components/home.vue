@@ -50,8 +50,8 @@
       </div>
       <div class="col-md-8">
         <label for="">TimeLines</label>
-        <div class="jumbotron" v-for="(image,i) in images" :key="i">
-          <img class ='img-responsive' :src='image.image' alt="">
+        <div v-for="(image,i) in images" :key="i" style="margin-bottom: 50px">
+          <img class ='img-responsive' :src='image.image' alt="" style="width: 400px; height: 500px;">
         </div>
       </div>
     </div>
